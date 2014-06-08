@@ -50,10 +50,12 @@ public class RedisFactory {
 	private static List<JedisShardInfo> getMachineList() {
 		List<JedisShardInfo> machineList = new ArrayList<JedisShardInfo>();
 		String value = DBConfiguration.get("redis_shard", "localhost:6379");
+		System.out.println("DEBUG: " + value);
 		String[] machines = value.split(";");
 		for(String machine : machines) {
 			String ip = machine.split(":")[0];
 			int port = Integer.valueOf(machine.split(":")[1]);
+			System.out.println(ip + " " + String.valueOf(port));
 			logger.debug(ip + " " + String.valueOf(port));
 			JedisShardInfo jsInfo = new JedisShardInfo(ip, port);
 			machineList.add(jsInfo);

@@ -48,6 +48,7 @@ public class HeteroDbClient extends DB {
     @Override
     public void init() {
     	
+    	System.out.println("DEBUG: heterodb client init start");
     	heterodb = new Heterodb();
     	logger.debug("heterodb create");
     }
@@ -87,6 +88,7 @@ public class HeteroDbClient extends DB {
     @Override
     public int insert(String table, String key,
             HashMap<String, ByteIterator> values) {
+    	System.out.println("DEBUG: insert");
     	if(heterodb.insert("0", table, key, StringByteIterator.getStringMap(values)) == 0) {
     		return 0;
     	}
