@@ -7,6 +7,9 @@ package com.heterodb.memcache;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.heterodb.common.DBConfiguration;
 
 import redis.clients.jedis.JedisPoolConfig;
@@ -24,6 +27,8 @@ import redis.clients.jedis.ShardedJedisPool;
  * 
  */
 public class RedisFactory {
+	
+	private static final Logger logger = LoggerFactory.getLogger(RedisFactory.class);
 	
 	private static ShardedJedisPool shardedJedisPool;
 	private static ShardedJedis jedis;
@@ -49,6 +54,7 @@ public class RedisFactory {
 		for(String machine : machines) {
 			String ip = machine.split(":")[0];
 			int port = Integer.valueOf(machine.split(":")[1]);
+			logger.debug(ip + " " + String.valueOf(port));
 			JedisShardInfo jsInfo = new JedisShardInfo(ip, port);
 			machineList.add(jsInfo);
 		}

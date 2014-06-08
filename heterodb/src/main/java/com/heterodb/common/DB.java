@@ -7,7 +7,7 @@ import java.util.Vector;
 
 public abstract class DB {
 	
-	public abstract void init(Configuration conf);
+	public abstract void init();
 	
 	public abstract void cleanup();
 	

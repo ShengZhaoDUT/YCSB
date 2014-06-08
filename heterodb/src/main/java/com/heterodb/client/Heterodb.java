@@ -20,13 +20,13 @@ public class Heterodb extends DB {
 	RedisInstance rsi;
 	MongodbInstance mis;
 	
-	public Heterodb(Configuration conf) {
+	public Heterodb() {
 		
-		init(conf);
+		init();
 	}
 
 	@Override
-	public void init(Configuration conf) {
+	public void init() {
 		// TODO Auto-generated method stub
 		
 		rsi = new RedisInstance();

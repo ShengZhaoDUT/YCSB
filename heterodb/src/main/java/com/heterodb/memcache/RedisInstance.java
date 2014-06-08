@@ -24,7 +24,7 @@ public class RedisInstance extends DB{
 	}
 
 	@Override
-	public void init(Configuration conf) {
+	public void init() {
 		// TODO Auto-generated method stub
 		
 	}
