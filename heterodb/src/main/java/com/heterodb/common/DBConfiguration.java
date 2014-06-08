@@ -23,9 +23,9 @@ public class DBConfiguration {
 		configuration.put("Redis_Total", "25");
 		configuration.put("Redis_Idle", "5");
 		configuration.put("Redis_WaitMillis", "60000");
-		configuration.put("redis_shard", "166.111.69.77:6379;166.111.69.77:7000;"
-				+ "166.111.69.77:7001;166.111.69.77:7002;166.111.69.77:7003;"
-				+ "166.111.69.77:7004");
+		configuration.put("redis_shard", "192.168.7.7:6379;192.168.7.101:6379;"
+				+ "192.168.7.102:6379;192.168.7.103:6379;192.168.7.103:6379;"
+				+ "192.168.7.104:6379;192.168.7.105:6379");
 		configuration.put("redis_sync", "localhost:6379");
 	}
 
