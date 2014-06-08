@@ -88,7 +88,7 @@ public class HeteroDbClient extends DB {
     @Override
     public int insert(String table, String key,
             HashMap<String, ByteIterator> values) {
-    	System.out.println("DEBUG: insert");
+    	//System.out.println("DEBUG: insert");
     	if(heterodb.insert("0", table, key, StringByteIterator.getStringMap(values)) == 0) {
     		return 0;
     	}
