@@ -120,7 +120,7 @@ public class MongoDbClient extends DB {
                 MongoOptions options = new MongoOptions();
                 options.connectionsPerHost = Integer.parseInt(maxConnections);
                 List<ServerAddress> addresses = new ArrayList<ServerAddress>();
-                String[] urls = url.split(";");
+                String[] urls = url.split(",");
                 for(String u : urls) {
                 	String[] para = u.split(":");
                 	System.out.println("host: " + para[0] + "; port: " + para[1]);
