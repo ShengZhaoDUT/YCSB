@@ -9,8 +9,10 @@
 
 package com.yahoo.ycsb.db;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
@@ -24,6 +26,7 @@ import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.Mongo;
 import com.mongodb.MongoOptions;
+import com.mongodb.ServerAddress;
 import com.mongodb.WriteConcern;
 import com.mongodb.WriteResult;
 import com.yahoo.ycsb.ByteArrayByteIterator;
@@ -111,14 +114,19 @@ public class MongoDbClient extends DB {
                 if (url.startsWith("mongodb://")) {
                     url = url.substring(10);
                 }
-
                 // need to append db to url.
-                url += "/" + database;
+                //url += "/" + database;
                 System.out.println("new database url = " + url);
                 MongoOptions options = new MongoOptions();
                 options.connectionsPerHost = Integer.parseInt(maxConnections);
-                mongo = new Mongo(new DBAddress(url), options);
-
+                List<ServerAddress> addresses = new ArrayList<ServerAddress>();
+                String[] urls = url.split(";");
+                for(String u : urls) {
+                	String[] para = u.split(":");
+                	System.out.println("host: " + para[0] + "; port: " + para[1]);
+                	addresses.add(new ServerAddress(para[0], Integer.parseInt(para[1])));
+                }
+                mongo = new Mongo(addresses, options);
                 System.out.println("mongo connection created with " + url);
             }
             catch (Exception e1) {
