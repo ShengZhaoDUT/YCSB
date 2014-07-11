@@ -107,7 +107,10 @@ public class HeteroDbClient extends DB {
     @SuppressWarnings("unchecked")
     public int read(String table, String key, Set<String> fields,
             HashMap<String, ByteIterator> result) {
-        return 0;
+    	if(heterodb.read("db", "syncFromRedis", key, fields, StringByteIterator.getStringMap(result)) == 0) {
+    		return 0;
+    	}
+        return 1;
     }
 
     /**

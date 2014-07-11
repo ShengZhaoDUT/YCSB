@@ -1,14 +1,13 @@
 package com.heterodb.memcache;
 
-import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Vector;
 
 import redis.clients.jedis.ShardedJedis;
 
-import com.heterodb.common.Configuration;
 import com.heterodb.common.DB;
 
 public class RedisInstance extends DB{
@@ -32,15 +31,30 @@ public class RedisInstance extends DB{
 	@Override
 	public void cleanup() {
 		// TODO Auto-generated method stub
-		shardedJedis.disconnect();
+		RedisFactory.close(shardedJedis);
 	}
 
 	@Override
 	public int read(String database, String table, String key,
 			Set<String> fields, Map<String, String> result) {
 		// TODO Auto-generated method stub
+		Map<String, String> response = shardedJedis.hgetAll(key);
+		if(fields == null) {
+			result.putAll(response);
+		}
+		else {
+			String[] fieldArray = (String[]) fields.toArray();
+			List<String> values = shardedJedis.hmget(key, fieldArray);
+			
+			Iterator<String> resultValue = values.iterator();
+			
+			for(String resultKey : fieldArray) {
+				result.put(resultKey, resultValue.next());
+			}
+
+		}
 		
-		return 0;
+		return result.isEmpty() ? 1 : 0;
 	}
 
 	@Override

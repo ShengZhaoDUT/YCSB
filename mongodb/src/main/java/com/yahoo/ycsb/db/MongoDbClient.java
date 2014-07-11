@@ -97,6 +97,10 @@ public class MongoDbClient extends DB {
             }
             else if ("replicas_safe".equals(writeConcernType)) {
                 writeConcern = WriteConcern.REPLICAS_SAFE;
+                
+            }
+            else if("majority".equals(writeConcernType)) {
+            	writeConcern = WriteConcern.MAJORITY;
             }
             else {
                 System.err
