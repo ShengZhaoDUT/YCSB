@@ -1,17 +1,21 @@
 package com.heterodb.db;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.Vector;
 
 import org.apache.hadoop.hbase.Cell;
 import org.apache.hadoop.hbase.CellUtil;
+import org.apache.hadoop.hbase.KeyValue;
 import org.apache.hadoop.hbase.client.Delete;
 import org.apache.hadoop.hbase.client.Get;
 import org.apache.hadoop.hbase.client.HTableInterface;
 import org.apache.hadoop.hbase.client.Put;
 import org.apache.hadoop.hbase.client.Result;
+import org.apache.hadoop.hbase.client.ResultScanner;
+import org.apache.hadoop.hbase.client.Scan;
 import org.apache.hadoop.hbase.util.Bytes;
 
 import com.heterodb.common.DB;
@@ -105,6 +109,40 @@ public class HBaseInstance extends DB{
 	public int scan(String database, String table, String startkey, int recordcount,
 			Set<String> fields, Vector<Map<String, String>> result) {
 		// TODO Auto-generated method stub
+		Scan s = new Scan(Bytes.toBytes(startkey));
+		s.setCaching(recordcount);
+		columnFamilyBytes = Bytes.toBytes("f1");
+		if(fields == null)
+			s.addFamily(columnFamilyBytes);
+		else
+			for(String field : fields)
+			{
+				s.addColumn(columnFamilyBytes, Bytes.toBytes(field));
+			}
+		ResultScanner scanner = null;
+		try {
+			scanner = htable.getScanner(s);
+			int numResults = 0;
+			for(Result rr = scanner.next(); rr != null; rr = scanner.next())
+			{
+				String keyString = Bytes.toString(rr.getRow());
+				HashMap<String, String> rowResult = new HashMap<String, String>();
+				for(Cell kv : rr.rawCells())
+				{
+					rowResult.put(Bytes.toString(CellUtil.cloneQualifier(kv)), Bytes.toString(CellUtil.cloneValue(kv)));
+				}
+				result.add(rowResult);
+				numResults++;
+				if(numResults >= recordcount)
+					break;
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			scanner.close();
+		}
+		
 		return 0;
 	}
 

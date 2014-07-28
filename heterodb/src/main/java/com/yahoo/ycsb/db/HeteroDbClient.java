@@ -49,6 +49,7 @@ public class HeteroDbClient extends DB {
     public void init() {
     	
     	System.out.println("DEBUG: heterodb client init start");
+        logger.info("heterodb create");
     	heterodb = new Heterodb();
     	logger.debug("heterodb create");
     }
@@ -107,6 +108,7 @@ public class HeteroDbClient extends DB {
     @SuppressWarnings("unchecked")
     public int read(String table, String key, Set<String> fields,
             HashMap<String, ByteIterator> result) {
+        //logger.info("read");
     	if(heterodb.read("db", "syncFromRedis", key, fields, StringByteIterator.getStringMap(result)) == 0) {
     		return 0;
     	}
@@ -142,7 +144,8 @@ public class HeteroDbClient extends DB {
     public int scan(String table, String startkey, int recordcount,
             Set<String> fields, Vector<HashMap<String, ByteIterator>> result) {
     	
-    	return 0;
+    	Vector<Map<String, String>> ownResult = new Vector<Map<String, String>>();
+        return heterodb.scan("default", "usertable", startkey, recordcount, fields, ownResult);
         
     }
 

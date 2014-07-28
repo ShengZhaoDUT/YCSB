@@ -29,8 +29,6 @@ import java.util.Set;
 import java.util.HashSet;
 import java.util.Vector;
 
-import org.apache.log4j.PropertyConfigurator;
-
 import com.yahoo.ycsb.workloads.*;
 
 /**
@@ -67,7 +65,7 @@ public class CommandLine
       public static void main(String[] args)
       {
 	 int argindex=0;
-	 PropertyConfigurator.configure("./log4j.properties");
+
 	 Properties props=new Properties();
 	 Properties fileprops=new Properties();
 	 String table=CoreWorkload.TABLENAME_PROPERTY_DEFAULT;

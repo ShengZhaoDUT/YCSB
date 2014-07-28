@@ -590,17 +590,23 @@ public class CoreWorkload extends Workload
 		
 		//choose a random scan length
 		int len=scanlength.nextInt();
-
+        /*
+         * print scan length
+         */
+        //int len = Integer.parseInt(MAX_SCAN_LENGTH_PROPERTY_DEFAULT);
+        //System.out.println("len:".concat(String.valueOf(len)));
 		HashSet<String> fields=null;
-
-		if (!readallfields)
+        fields = new HashSet<String>();
+        fields.add("field1");
+		/*if (!readallfields)
 		{
 			//read a random field  
 			String fieldname="field"+fieldchooser.nextString();
 
 			fields=new HashSet<String>();
 			fields.add(fieldname);
-		}
+            //fields.add("field1");
+		}*/
 
 		db.scan(table,startkeyname,len,fields,new Vector<HashMap<String,ByteIterator>>());
 	}

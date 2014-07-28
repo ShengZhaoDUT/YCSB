@@ -27,7 +27,12 @@
     	<artifactId>hbase-client</artifactId>
     	<version>0.96.1-hadoop2</version>	
 	</dependency>
-	<dependency>
+    <dependency>
+    	<groupId>com.google.guava</groupId>
+    	<artifactId>guava</artifactId>
+    	<version>11.0.2</version>	
+	</dependency>
+    <dependency>
     	<groupId>org.mongodb</groupId>
     	<artifactId>mongo-java-driver</artifactId>
     	<version>2.10.0</version>	

@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.heterodb.common.DB;
+import com.heterodb.db.HBaseInstance;
 import com.heterodb.db.MongodbInstance;
 import com.heterodb.memcache.RedisInstance;
 
@@ -20,7 +21,8 @@ public class Heterodb extends DB {
 	
 	private RedisInstance rsi;
 	private MongodbInstance mis;
-	
+	private HBaseInstance his;
+
 	public Heterodb() {
 		
 		init();
@@ -66,11 +68,12 @@ public class Heterodb extends DB {
 			logger.debug("read redis cache is null");
 		}
 		*/
-		if(fields == null) {
+        if(fields == null) {
 			Map<String, String> cache = new HashMap<String, String>();
 			mis.read(database, table, key, fields, result);
-			rsi.read(database, table, key, fields, cache);
-			result.putAll(cache);
+			//rsi.read(database, table, key, fields, cache);
+			//result.putAll(cache);
+            //rsi.read(database, table, key, fields, result);
 		}
 		else {
 			rsi.read(database, table, key, fields, result);
@@ -123,7 +126,8 @@ public class Heterodb extends DB {
 			int recordcount, Set<String> fields,
 			Vector<Map<String, String>> result) {
 		// TODO Auto-generated method stub
-		return 0;
+        his = new HBaseInstance(table);
+        return his.scan(database, table, startkey, recordcount, fields, result);
 	}
 
 	@Override

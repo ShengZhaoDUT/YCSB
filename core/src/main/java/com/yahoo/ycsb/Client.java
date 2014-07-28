@@ -22,8 +22,6 @@ import java.io.*;
 import java.text.DecimalFormat;
 import java.util.*;
 
-import org.apache.log4j.PropertyConfigurator;
-
 import com.yahoo.ycsb.measurements.Measurements;
 import com.yahoo.ycsb.measurements.exporter.MeasurementsExporter;
 import com.yahoo.ycsb.measurements.exporter.TextMeasurementsExporter;
@@ -434,7 +432,6 @@ public class Client
 	public static void main(String[] args)
 	{
 		String dbname;
-		PropertyConfigurator.configure("/root/zs/YCSB_e/core/log4j.properties");
 		Properties props=new Properties();
 		Properties fileprops=new Properties();
 		boolean dotransactions=true;
