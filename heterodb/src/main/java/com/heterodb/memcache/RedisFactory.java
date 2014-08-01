@@ -29,15 +29,19 @@ import redis.clients.jedis.ShardedJedisPool;
 public class RedisFactory {
 	
 	private static final Logger logger = LoggerFactory.getLogger(RedisFactory.class);
+	private static final String REDIS_TOTAL = "redis_total";
+	private static final String REDIS_IDLE = "redis_idle";
+	private static final String REDIS_WAITMILLIS = "redis_waitmillis";
+	private static final String REDIS_SHARD = "redis_shard";
 	
 	private static ShardedJedisPool shardedJedisPool;
 	//private List<JedisShardInfo> shards = new ArrayList<JedisShardInfo>();
 	
 	static{
 		
-		int maxTotal = DBConfiguration.getInt("Redis_Total", 25);
-		int maxIdle = DBConfiguration.getInt("Redis_Idle", 5);
-		int maxMillis = DBConfiguration.getInt("Redis_WaitMillis", 1000 * 60);
+		int maxTotal = DBConfiguration.getInt(REDIS_TOTAL, 25);
+		int maxIdle = DBConfiguration.getInt(REDIS_IDLE, 5);
+		int maxMillis = DBConfiguration.getInt(REDIS_WAITMILLIS, 1000 * 60);
 		JedisPoolConfig config = new JedisPoolConfig();
 		config.setMaxTotal(maxTotal);
 		config.setMaxIdle(maxIdle);
@@ -48,7 +52,7 @@ public class RedisFactory {
 	
 	private static List<JedisShardInfo> getMachineList() {
 		List<JedisShardInfo> machineList = new ArrayList<JedisShardInfo>();
-		String value = DBConfiguration.get("redis_shard", "localhost:6379");
+		String value = DBConfiguration.get(REDIS_SHARD, "localhost:6379");
 		System.out.println("DEBUG: " + value);
 		String[] machines = value.split(";");
 		for(String machine : machines) {

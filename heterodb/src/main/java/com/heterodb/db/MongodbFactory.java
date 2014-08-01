@@ -10,12 +10,16 @@ import com.mongodb.ServerAddress;
 public class MongodbFactory {
 	
 	private static Mongo mongo;
+	private static final String MONGO_HOSTNAME = "mongo_hostname";
+	private static final String MONGO_PORT = "mongo_port";
+	private static final String CONNECTION_MULTIPLIER = "connection_multiplier";
+	private static final String CONNECTION_HOST = "connection_host";
 	
 	static {
-		String hostname = DBConfiguration.get("mongo-hostname", "localhost");
-		int port = DBConfiguration.getInt("mongo-port", 27017);
-		int threads = DBConfiguration.getInt("connection-multiplier", 5);
-		int connections = DBConfiguration.getInt("connection_host", 10);
+		String hostname = DBConfiguration.get(MONGO_HOSTNAME, "localhost");
+		int port = DBConfiguration.getInt(MONGO_PORT, 27017);
+		int threads = DBConfiguration.getInt(CONNECTION_MULTIPLIER, 5);
+		int connections = DBConfiguration.getInt(CONNECTION_HOST, 10);
 		try {
 			MongoOptions options = new MongoOptions();
 			options.setThreadsAllowedToBlockForConnectionMultiplier(threads);

@@ -8,7 +8,6 @@ import java.util.Vector;
 
 import org.apache.hadoop.hbase.Cell;
 import org.apache.hadoop.hbase.CellUtil;
-import org.apache.hadoop.hbase.KeyValue;
 import org.apache.hadoop.hbase.client.Delete;
 import org.apache.hadoop.hbase.client.Get;
 import org.apache.hadoop.hbase.client.HTableInterface;
@@ -19,11 +18,14 @@ import org.apache.hadoop.hbase.client.Scan;
 import org.apache.hadoop.hbase.util.Bytes;
 
 import com.heterodb.common.DB;
+import com.heterodb.common.DBConfiguration;
 
 public class HBaseInstance extends DB{
 
 	private HTableInterface htable;
-	private byte columnFamilyBytes[] = Bytes.toBytes("Default");
+	private static final String KEY = "_key";
+	private static final String COLUMNFAMILY = "sync_column_family";
+	private byte columnFamilyBytes[] = Bytes.toBytes(DBConfiguration.get(COLUMNFAMILY, "default"));
 	
 	public HBaseInstance(String table) {
 		htable = HBaseFactory.getHBaseInstance(table);
@@ -127,6 +129,7 @@ public class HBaseInstance extends DB{
 			{
 				String keyString = Bytes.toString(rr.getRow());
 				HashMap<String, String> rowResult = new HashMap<String, String>();
+				rowResult.put(KEY, keyString);
 				for(Cell kv : rr.rawCells())
 				{
 					rowResult.put(Bytes.toString(CellUtil.cloneQualifier(kv)), Bytes.toString(CellUtil.cloneValue(kv)));

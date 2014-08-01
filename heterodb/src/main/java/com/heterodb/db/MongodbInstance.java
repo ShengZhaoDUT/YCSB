@@ -14,6 +14,7 @@ import com.mongodb.WriteResult;
 public class MongodbInstance extends DB{
 	
 	private Mongo mongo;
+	private static final String ID = "_id";
 	
 	//protected static final AtomicInteger InitCount = new AtomicInteger(0);
 	
@@ -40,7 +41,7 @@ public class MongodbInstance extends DB{
 		com.mongodb.DB db = null;
 		db = mongo.getDB(database);
 		DBCollection dbCollection = db.getCollection(table);
-		DBObject query = new BasicDBObject().append("_id", key);
+		DBObject query = new BasicDBObject().append(ID, key);
 		DBObject fieldsToReturn = new BasicDBObject();
 		DBObject queryResult = null;
 		if(fields != null) {
@@ -64,8 +65,8 @@ public class MongodbInstance extends DB{
 		com.mongodb.DB db = null;
 		db = mongo.getDB(database);
 		DBCollection dbCollection = db.getCollection(table);
-		DBObject source = new BasicDBObject().append("_id", key);
-		DBObject target = new BasicDBObject().append("_id", key);
+		DBObject source = new BasicDBObject().append(ID, key);
+		DBObject target = new BasicDBObject().append(ID, key);
 		for(Map.Entry<String, String> entry : result.entrySet()) {
 			target.put(entry.getKey(), entry.getValue());
 		}
@@ -79,7 +80,7 @@ public class MongodbInstance extends DB{
 		com.mongodb.DB db = null;
 		db = mongo.getDB(database);
 		DBCollection dbCollection = db.getCollection(table);
-		DBObject dbObject = new BasicDBObject().append("_id", key);
+		DBObject dbObject = new BasicDBObject().append(ID, key);
 		for(Map.Entry<String, String> entry : values.entrySet()) {
 			dbObject.put(entry.getKey(), entry.getValue());
 		}
@@ -100,7 +101,7 @@ public class MongodbInstance extends DB{
 		com.mongodb.DB db = null;
 		db = mongo.getDB(database);
 		DBCollection dbCollection = db.getCollection(table);
-		DBObject query = new BasicDBObject().append("_id", key);
+		DBObject query = new BasicDBObject().append(ID, key);
 		WriteResult res = dbCollection.remove(query);
 		return res.getN() == 1 ? 0 : 1;
 	}

@@ -69,7 +69,7 @@ public class Heterodb extends DB {
 		}
 		*/
         if(fields == null) {
-			Map<String, String> cache = new HashMap<String, String>();
+			//Map<String, String> cache = new HashMap<String, String>();
 			mis.read(database, table, key, fields, result);
 			//rsi.read(database, table, key, fields, cache);
 			//result.putAll(cache);

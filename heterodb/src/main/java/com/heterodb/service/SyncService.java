@@ -25,6 +25,7 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.Pipeline;
 import redis.clients.jedis.Response;
 
+import com.heterodb.common.DBConfiguration;
 import com.heterodb.db.HBaseFactory;
 import com.heterodb.db.MongodbFactory;
 import com.mongodb.BasicDBObject;
@@ -42,11 +43,14 @@ import com.mongodb.WriteResult;
 public class SyncService {
 	
 	private static final Logger logger = LoggerFactory.getLogger(SyncService.class);
+	private static final String COLUMNFAMILY = "sync_column_family";
+	private byte columnFamilyBytes[] = Bytes.toBytes(DBConfiguration.get(COLUMNFAMILY, "default"));
 	
+	private static final String MONGODB_NAME = "sync_mongodb_database";
 	
 	private final int threshold = 100;
-	private final String cf = "default";
-	private final String mongoDBName = "db";
+	//private final String cf = "default";
+	private final String mongoDBName = DBConfiguration.get(MONGODB_NAME, "db");
 	private final int threadCount = 10;
 	
 	public SyncService() {}
@@ -186,7 +190,7 @@ public class SyncService {
 				DBObject dbObject = new BasicDBObject();
 				dbObject.put("_id", key);
 				for(Map.Entry<String, String> entry : keyval.entrySet()) {
-					put.add(Bytes.toBytes(cf), Bytes.toBytes(entry.getKey()), Bytes.toBytes(entry.getValue()));
+					put.add(columnFamilyBytes, Bytes.toBytes(entry.getKey()), Bytes.toBytes(entry.getValue()));
 					dbObject.put(entry.getKey(), entry.getValue());
 				}
 				if(hContent.containsKey(tableName)) {
