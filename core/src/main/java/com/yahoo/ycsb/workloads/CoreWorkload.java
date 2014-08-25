@@ -268,6 +268,8 @@ public class CoreWorkload extends Workload
 
 	CounterGenerator transactioninsertkeysequence;
 	
+	UniformIntegerGenerator insertKeysequence;
+	
 	IntegerGenerator scanlength;
 	
 	boolean orderedinserts;
@@ -368,6 +370,7 @@ public class CoreWorkload extends Workload
 		}
 
 		transactioninsertkeysequence=new CounterGenerator(recordcount);
+		insertKeysequence = new UniformIntegerGenerator(0,  recordcount-1);
 		if (requestdistrib.compareTo("uniform")==0)
 		{
 			keychooser=new UniformIntegerGenerator(0,recordcount-1);
@@ -637,8 +640,8 @@ public class CoreWorkload extends Workload
 	public void doTransactionInsert(DB db)
 	{
 		//choose the next key
-		int keynum=transactioninsertkeysequence.nextInt();
-
+		//int keynum=transactioninsertkeysequence.nextInt();
+		int keynum = insertKeysequence.nextInt();
 		String dbkey = buildKeyName(keynum);
 
 		HashMap<String, ByteIterator> values = buildValues();
