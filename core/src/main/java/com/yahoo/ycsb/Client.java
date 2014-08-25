@@ -225,6 +225,7 @@ class ClientThread extends Thread
 		{
 			if (_dotransactions)
 			{
+				System.out.println("!!!!!!!!!here");
 				long st=System.currentTimeMillis();
 
 				while (((_opcount == 0) || (_opsdone < _opcount)) && !_workload.isStopRequested())

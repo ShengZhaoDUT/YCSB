@@ -642,6 +642,7 @@ public class CoreWorkload extends Workload
 		//choose the next key
 		//int keynum=transactioninsertkeysequence.nextInt();
 		int keynum = insertKeysequence.nextInt();
+		System.out.println(keynum);
 		String dbkey = buildKeyName(keynum);
 
 		HashMap<String, ByteIterator> values = buildValues();

@@ -1,9 +1,0 @@
-YCSB Client 0.1
-Command line: -db com.yahoo.ycsb.db.HeteroDbClient -P workloads/workloada -p operationcount=1000000 -s -t
-DEBUG: heterodb client init start
-configuration
-DEBUG: 192.168.6.4:6379;192.168.6.9:6379;192.168.6.10:6379
-192.168.6.4 6379
-192.168.6.9 6379
-192.168.6.10 6379
-java -cp /root/zs/YCSB_e/infinispan/src/main/conf:/root/zs/YCSB_e/core/target/core-0.1.4.jar:/root/zs/YCSB_e/nosqldb/src/main/conf:/root/zs/YCSB_e/core_bk/target/core-0.1.4.jar:/root/zs/YCSB_e/core_bk/target/surefire/surefirebooter7112335283900217230.jar:/root/zs/YCSB_e/voldemort/src/main/conf:/root/zs/YCSB_e/hbase/src/main/conf:/root/zs/YCSB_e/hbase/bin/src/main/conf:/root/zs/YCSB_e/gemfire/src/main/conf:/root/zs/YCSB_e/jdbc/src/main/conf:/root/zs/YCSB_e/heterodb/target/hetero-binding-0.1.4.jar:/root/zs/YCSB_e/heterodb/target/archive-tmp/hetero-binding-0.1.4.jar:/root/zs/YCSB_e/dynamodb/conf com.yahoo.ycsb.Client -db com.yahoo.ycsb.db.HeteroDbClient -P workloads/workloada -p operationcount=1000000 -s -t
