@@ -432,6 +432,13 @@ public class Client
 	@SuppressWarnings("unchecked")
 	public static void main(String[] args)
 	{
+		TextMeasurementsExporter exporter = new TextMeasurementsExporter(System.out);
+		try {
+			exporter.write("!!!!!!");
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		String dbname;
 		Properties props=new Properties();
 		Properties fileprops=new Properties();
